@@ -14,7 +14,6 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { name, productTypeId, attributes } = body;
 
-    // ✅ Validate required fields
     if (!name || !productTypeId || !attributes) {
       return new Response(
         JSON.stringify({ error: "Missing required fields." }),
@@ -22,7 +21,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ Create new product
     const created = await prisma.product.create({
       data: {
         name: name.trim(), // ensure trimmed, not empty
@@ -49,7 +47,7 @@ export async function GET() {
     const products = await prisma.product.findMany({
       include: { productType: true },
       orderBy: {
-        createdAt: "desc", // ✅ newest first
+        createdAt: "desc", 
       },
     });
 

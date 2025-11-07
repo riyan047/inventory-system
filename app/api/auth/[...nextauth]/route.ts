@@ -37,10 +37,9 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // If user just signed in, attach their role
+
       if (user) token.role = user.role;
 
-      // 🧠 Always re-fetch role from DB for latest value
       if (!user && token.email) {
         const dbUser = await prisma.user.findUnique({
           where: { email: token.email },

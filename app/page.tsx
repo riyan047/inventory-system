@@ -77,7 +77,6 @@ export default function HomePage() {
               </span>
             </p>
 
-            {/* Grid of Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {links.map((link) => (
                 <div
@@ -94,7 +93,6 @@ export default function HomePage() {
               ))}
             </div>
 
-            {/* Sign Out Button */}
             <div className="flex justify-center mt-10">
               <button
                 onClick={() => signOut()}
@@ -105,7 +103,6 @@ export default function HomePage() {
             </div>
           </>
         ) : (
-          // Not signed in
           <div className="text-center mt-20">
             <p className="text-gray-600 mb-4 text-lg">You are not signed in.</p>
             <button

@@ -13,7 +13,6 @@ export default function ProductsPage() {
     const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(true);
 
-    // Fetch all products & product types
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -37,16 +36,13 @@ export default function ProductsPage() {
         fetchData();
     }, []);
 
-    // Filter products when search or type changes
     useEffect(() => {
         let result = products;
 
-        // Filter by type
         if (selectedType !== "all") {
             result = result.filter((p) => p.productTypeId === Number(selectedType));
         }
 
-        // Filter by search term
         if (searchTerm.trim() !== "") {
             const term = searchTerm.toLowerCase();
             result = result.filter(
@@ -61,7 +57,6 @@ export default function ProductsPage() {
 
     return (
         <PageContainer title="Product Inventory">
-            {/* Header Controls */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
                 <div className="flex flex-wrap gap-3">
                     <Link href="/">
@@ -107,7 +102,6 @@ export default function ProductsPage() {
                 </div>
             </div>
 
-            {/* Table */}
             {loading ? (
                 <p className="text-gray-500 text-center py-6">Loading products...</p>
             ) : (

@@ -6,17 +6,17 @@ export default async function proxy(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
   const { pathname } = req.nextUrl;
 
-  // ✅ Log token for debugging (optional — you can remove later)
+ 
   console.log("Middleware token:", token);
 
-  // 🚫 If not signed in, block access to any protected routes
+
   if (!token) {
-    // Allow public pages like home, login, and signup redirect
+    
     if (
       pathname === "/" ||
       pathname.startsWith("/signin") ||
       pathname.startsWith("/api/auth") ||
-      pathname.startsWith("/products") // users can still view inventory
+      pathname.startsWith("/products")  
     ) {
       return NextResponse.next();
     }
@@ -24,7 +24,7 @@ export default async function proxy(req: NextRequest) {
     return NextResponse.redirect(new URL("/signin", req.url));
   }
 
-  // ✅ ADMIN-only routes protection
+
   if (pathname.startsWith("/admin")) {
     if (token.role !== "ADMIN") {
       console.log(
@@ -36,19 +36,16 @@ export default async function proxy(req: NextRequest) {
     }
   }
 
-  // ✅ ADMIN-only signup protection
   if (pathname.startsWith("/signup")) {
     if (token.role !== "ADMIN") {
       return NextResponse.redirect(new URL("/unauthorized", req.url));
     }
   }
 
-  // ✅ /products route is open for all logged-in users
   if (pathname.startsWith("/products")) {
     return NextResponse.next();
   }
-
-  // Default: allow access
+ 
   return NextResponse.next();
 }
 
@@ -57,6 +54,6 @@ export const config = {
     "/admin/:path*",
     "/signup",
     "/products/:path*",
-    "/", // optional: covers home if you want to restrict it
+    "/", 
   ],
 };
